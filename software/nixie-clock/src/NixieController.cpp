@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "NixieController.hpp"
-#include <ArduinoLog.h>
+#include "ArduinoLog.h"
 
 // SN74141 : True Table
 //D C B A #
@@ -28,7 +28,7 @@
 #define ANODE_4 9
 #define ANODE_5 10
 #define ANODE_6 11
-const int anodes[] = {ANODE_1, ANODE_2, ANODE_3, ANODE_4, ANODE_5, ANODE_6}
+const int anodes[] = {ANODE_1, ANODE_2, ANODE_3, ANODE_4, ANODE_5, ANODE_6};
 
 void NixieController::initialize(){
   Log.noticeln("Initializing nixies");
@@ -45,7 +45,7 @@ void NixieController::initialize(){
   pinMode(ANODE_6, OUTPUT);  
 }
 
-int[] decimalTo4BitBinary(int decimal_number) {
+/*int[] decimalTo4BitBinary(int decimal_number) {
   if (decimal_number > 15) {
     Log.errorln("error in decimal conversion: number too big");
     return;
@@ -58,9 +58,9 @@ int[] decimalTo4BitBinary(int decimal_number) {
       i++;
    }
    return binaryNumber;
-}
+}*/
 
-void displayDigit(int anode = 0, int digit) {
+void displayDigit(int anode = 0, int digit = 0) {
   int anodePin;
   int a,b,c,d;
     
