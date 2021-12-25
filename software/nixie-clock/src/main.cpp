@@ -15,6 +15,9 @@ TimeController time_controller;
 WiFiController wifi_controller;
 NixieController nixie_controller;
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+// cppcheck-suppress unusedFunction
 void setup() {
   Serial.begin(115200);
   Log.begin(LOG_LEVEL_VERBOSE, &Serial, true);
@@ -27,6 +30,9 @@ void setup() {
   //server.begin();
 }
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+// cppcheck-suppress unusedFunction
 void loop() {
   Serial.println(time_controller.getShortLocalTime());
   delay(random(500,2000));
