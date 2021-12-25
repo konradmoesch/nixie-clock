@@ -20,7 +20,11 @@ fp-info-cache
 # Autorouter files (exported from Pcbnew)
 *.dsn
 *.ses
+hardware/*/routing/
 
 # Exported BOM files
 *.xml
 *.csv
+
+# Exported pdf files
+*.pdf
