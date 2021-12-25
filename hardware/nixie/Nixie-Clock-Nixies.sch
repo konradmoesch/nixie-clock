@@ -4,133 +4,19 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "Nixie-Clock: Nixies"
+Date "2021-12-25"
+Rev "1.0"
+Comp "Konrad Mösch"
 Comment1 ""
 Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N1
-U 1 1 61C656EE
-P 1250 2800
-F 0 "N1" V 1200 2097 45  0000 R CNN
-F 1 "IN-4" H 1250 2800 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-4-DSUB" H 1280 2950 20  0001 C CNN
-F 3 "" H 1250 2800 50  0001 C CNN
-	1    1250 2800
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N2
-U 1 1 61C66B88
-P 2850 2800
-F 0 "N2" V 2800 2097 45  0000 R CNN
-F 1 "IN-4" H 2850 2800 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-4-DSUB" H 2880 2950 20  0001 C CNN
-F 3 "" H 2850 2800 50  0001 C CNN
-	1    2850 2800
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N8
-U 1 1 61C679B4
-P 3950 3100
-F 0 "N8" H 3950 3370 45  0000 C CNN
-F 1 "IN-6" H 3950 3100 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-6" H 3980 3250 20  0001 C CNN
-F 3 "" H 3950 3100 50  0001 C CNN
-	1    3950 3100
-	1    0    0    -1  
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N7
-U 1 1 61C6976E
-P 3950 2600
-F 0 "N7" H 3950 2870 45  0000 C CNN
-F 1 "IN-6" H 3950 2600 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-6" H 3980 2750 20  0001 C CNN
-F 3 "" H 3950 2600 50  0001 C CNN
-	1    3950 2600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N3
-U 1 1 61C6CBC4
-P 5100 2800
-F 0 "N3" V 5050 2097 45  0000 R CNN
-F 1 "IN-4" H 5100 2800 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-4-DSUB" H 5130 2950 20  0001 C CNN
-F 3 "" H 5100 2800 50  0001 C CNN
-	1    5100 2800
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N4
-U 1 1 61C6CBCA
-P 6700 2800
-F 0 "N4" V 6650 2097 45  0000 R CNN
-F 1 "IN-4" H 6700 2800 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-4-DSUB" H 6730 2950 20  0001 C CNN
-F 3 "" H 6700 2800 50  0001 C CNN
-	1    6700 2800
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N10
-U 1 1 61C6CBD0
-P 7850 3100
-F 0 "N10" H 7850 3370 45  0000 C CNN
-F 1 "IN-6" H 7850 3100 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-6" H 7880 3250 20  0001 C CNN
-F 3 "" H 7850 3100 50  0001 C CNN
-	1    7850 3100
-	1    0    0    -1  
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N9
-U 1 1 61C6CBD6
-P 7850 2600
-F 0 "N9" H 7850 2870 45  0000 C CNN
-F 1 "IN-6" H 7850 2600 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-6" H 7880 2750 20  0001 C CNN
-F 3 "" H 7850 2600 50  0001 C CNN
-	1    7850 2600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N5
-U 1 1 61C6E7AE
-P 9000 2800
-F 0 "N5" V 8950 2097 45  0000 R CNN
-F 1 "IN-4" H 9000 2800 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-4-DSUB" H 9030 2950 20  0001 C CNN
-F 3 "" H 9000 2800 50  0001 C CNN
-	1    9000 2800
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N6
-U 1 1 61C6E7B4
-P 10600 2800
-F 0 "N6" V 10550 2097 45  0000 R CNN
-F 1 "IN-4" H 10600 2800 45  0001 L BNN
-F 2 "nixies-us:nixies-us-IN-4-DSUB" H 10630 2950 20  0001 C CNN
-F 3 "" H 10600 2800 50  0001 C CNN
-	1    10600 2800
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	3650 2600 3650 2650
 Wire Wire Line
 	7550 2600 7550 2650
-Wire Wire Line
-	4250 2600 4250 3100
-Wire Wire Line
-	8150 2600 8150 3100
 Wire Wire Line
 	5800 2350 5500 2350
 Wire Wire Line
@@ -622,12 +508,6 @@ Wire Wire Line
 	11000 3500 9400 3500
 Wire Wire Line
 	7100 3500 9400 3500
-Connection ~ 4250 3100
-Connection ~ 8150 3100
-Wire Wire Line
-	8150 3100 8150 5450
-Wire Wire Line
-	4250 3100 4250 5450
 Wire Wire Line
 	11000 3200 11000 3500
 Wire Wire Line
@@ -821,45 +701,165 @@ Wire Wire Line
 $Comp
 L Mechanical:MountingHole H2
 U 1 1 61CADA22
-P 850 1100
-F 0 "H2" H 950 1146 50  0000 L CNN
-F 1 "MountingHole" H 950 1055 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 1100 50  0001 C CNN
-F 3 "~" H 850 1100 50  0001 C CNN
-	1    850  1100
+P 10900 900
+F 0 "H2" H 11000 946 50  0000 L CNN
+F 1 "MountingHole" H 11000 855 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 10900 900 50  0001 C CNN
+F 3 "~" H 10900 900 50  0001 C CNN
+	1    10900 900 
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H3
 U 1 1 61CAE12D
-P 850 1300
-F 0 "H3" H 950 1346 50  0000 L CNN
-F 1 "MountingHole" H 950 1255 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 1300 50  0001 C CNN
-F 3 "~" H 850 1300 50  0001 C CNN
-	1    850  1300
+P 750 5000
+F 0 "H3" H 850 5046 50  0000 L CNN
+F 1 "MountingHole" H 850 4955 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 750 5000 50  0001 C CNN
+F 3 "~" H 750 5000 50  0001 C CNN
+	1    750  5000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H4
 U 1 1 61CAE6FB
-P 850 1500
-F 0 "H4" H 950 1546 50  0000 L CNN
-F 1 "MountingHole" H 950 1455 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 1500 50  0001 C CNN
-F 3 "~" H 850 1500 50  0001 C CNN
-	1    850  1500
+P 10900 5000
+F 0 "H4" H 11000 5046 50  0000 L CNN
+F 1 "MountingHole" H 11000 4955 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 10900 5000 50  0001 C CNN
+F 3 "~" H 10900 5000 50  0001 C CNN
+	1    10900 5000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 61CACF00
-P 850 900
-F 0 "H1" H 950 946 50  0000 L CNN
-F 1 "MountingHole" H 950 855 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 900 50  0001 C CNN
-F 3 "~" H 850 900 50  0001 C CNN
-	1    850  900 
+P 750 900
+F 0 "H1" H 850 946 50  0000 L CNN
+F 1 "MountingHole" H 850 855 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 750 900 50  0001 C CNN
+F 3 "~" H 750 900 50  0001 C CNN
+	1    750  900 
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	4250 2600 4250 3100
+Wire Wire Line
+	8150 2600 8150 3100
+$Comp
+L nixies-us:IN-4 N1
+U 1 1 61C87710
+P 1250 2800
+F 0 "N1" V 1200 2097 45  0000 R CNN
+F 1 "IN-4" H 1250 2800 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-4-DSUB" H 1280 2950 20  0001 C CNN
+F 3 "" H 1250 2800 50  0001 C CNN
+	1    1250 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixies-us:IN-4 N2
+U 1 1 61CA8401
+P 2850 2800
+F 0 "N2" V 2800 2097 45  0000 R CNN
+F 1 "IN-4" H 2850 2800 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-4-DSUB" H 2880 2950 20  0001 C CNN
+F 3 "" H 2850 2800 50  0001 C CNN
+	1    2850 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixies-us:IN-4 N3
+U 1 1 61CAC5E2
+P 5100 2800
+F 0 "N3" V 5050 2097 45  0000 R CNN
+F 1 "IN-4" H 5100 2800 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-4-DSUB" H 5130 2950 20  0001 C CNN
+F 3 "" H 5100 2800 50  0001 C CNN
+	1    5100 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixies-us:IN-4 N4
+U 1 1 61CAC7D4
+P 6700 2800
+F 0 "N4" V 6650 2097 45  0000 R CNN
+F 1 "IN-4" H 6700 2800 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-4-DSUB" H 6730 2950 20  0001 C CNN
+F 3 "" H 6700 2800 50  0001 C CNN
+	1    6700 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixies-us:IN-4 N5
+U 1 1 61D07B84
+P 9000 2800
+F 0 "N5" V 8950 2097 45  0000 R CNN
+F 1 "IN-4" H 9000 2800 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-4-DSUB" H 9030 2950 20  0001 C CNN
+F 3 "" H 9000 2800 50  0001 C CNN
+	1    9000 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixies-us:IN-4 N6
+U 1 1 61D07B8A
+P 10600 2800
+F 0 "N6" V 10550 2097 45  0000 R CNN
+F 1 "IN-4" H 10600 2800 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-4-DSUB" H 10630 2950 20  0001 C CNN
+F 3 "" H 10600 2800 50  0001 C CNN
+	1    10600 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixies-us:IN-6 N7
+U 1 1 61D34690
+P 3950 2600
+F 0 "N7" H 3950 2870 45  0000 C CNN
+F 1 "IN-6" H 3950 2600 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-6" H 3980 2750 20  0001 C CNN
+F 3 "" H 3950 2600 50  0001 C CNN
+	1    3950 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixies-us:IN-6 N8
+U 1 1 61D37441
+P 3950 3100
+F 0 "N8" H 3950 3370 45  0000 C CNN
+F 1 "IN-6" H 3950 3100 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-6" H 3980 3250 20  0001 C CNN
+F 3 "" H 3950 3100 50  0001 C CNN
+	1    3950 3100
+	1    0    0    -1  
+$EndComp
+Connection ~ 4250 3100
+Wire Wire Line
+	4250 3100 4250 5450
+$Comp
+L nixies-us:IN-6 N9
+U 1 1 61D38F4A
+P 7850 2600
+F 0 "N9" H 7850 2870 45  0000 C CNN
+F 1 "IN-6" H 7850 2600 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-6" H 7880 2750 20  0001 C CNN
+F 3 "" H 7850 2600 50  0001 C CNN
+	1    7850 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixies-us:IN-6 N10
+U 1 1 61D38F50
+P 7850 3100
+F 0 "N10" H 7850 3370 45  0000 C CNN
+F 1 "IN-6" H 7850 3100 45  0001 L BNN
+F 2 "nixies-us:nixies-us-IN-6" H 7880 3250 20  0001 C CNN
+F 3 "" H 7850 3100 50  0001 C CNN
+	1    7850 3100
+	1    0    0    -1  
+$EndComp
+Connection ~ 8150 3100
+Wire Wire Line
+	8150 3100 8150 5450
 $EndSCHEMATC
