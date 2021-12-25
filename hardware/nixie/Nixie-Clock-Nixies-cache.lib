@@ -73,11 +73,11 @@ X ~ 2 0 -150 50 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# nixies-us_IN-4
+# Nixie-Clock-Nixies-rescue_IN-4-nixies-us
 #
-DEF nixies-us_IN-4 N 0 40 N Y 1 L N
+DEF Nixie-Clock-Nixies-rescue_IN-4-nixies-us N 0 40 N Y 1 L N
 F0 "N" -225 825 45 H V L BNN
-F1 "nixies-us_IN-4" 0 0 45 H I L BNN
+F1 "Nixie-Clock-Nixies-rescue_IN-4-nixies-us" 0 0 45 H I L BNN
 F2 "nixies-us_IN-4-DSUB" 30 150 20 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -103,11 +103,11 @@ X A A3 300 0 100 L 40 40 1 1 B
 ENDDRAW
 ENDDEF
 #
-# nixies-us_IN-6
+# Nixie-Clock-Nixies-rescue_IN-6-nixies-us
 #
-DEF nixies-us_IN-6 N 0 40 Y N 1 L N
+DEF Nixie-Clock-Nixies-rescue_IN-6-nixies-us N 0 40 Y N 1 L N
 F0 "N" -150 225 45 H V L BNN
-F1 "nixies-us_IN-6" 0 0 45 H I L BNN
+F1 "Nixie-Clock-Nixies-rescue_IN-6-nixies-us" 0 0 45 H I L BNN
 F2 "nixies-us_IN-6" 30 150 20 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST

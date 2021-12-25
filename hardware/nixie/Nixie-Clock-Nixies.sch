@@ -14,7 +14,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L nixies-us:IN-4 N1
+L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N1
 U 1 1 61C656EE
 P 1250 2800
 F 0 "N1" V 1200 2097 45  0000 R CNN
@@ -25,7 +25,7 @@ F 3 "" H 1250 2800 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L nixies-us:IN-4 N2
+L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N2
 U 1 1 61C66B88
 P 2850 2800
 F 0 "N2" V 2800 2097 45  0000 R CNN
@@ -36,7 +36,7 @@ F 3 "" H 2850 2800 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L nixies-us:IN-6 N8
+L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N8
 U 1 1 61C679B4
 P 3950 3100
 F 0 "N8" H 3950 3370 45  0000 C CNN
@@ -47,7 +47,7 @@ F 3 "" H 3950 3100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L nixies-us:IN-6 N7
+L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N7
 U 1 1 61C6976E
 P 3950 2600
 F 0 "N7" H 3950 2870 45  0000 C CNN
@@ -58,7 +58,7 @@ F 3 "" H 3950 2600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L nixies-us:IN-4 N3
+L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N3
 U 1 1 61C6CBC4
 P 5100 2800
 F 0 "N3" V 5050 2097 45  0000 R CNN
@@ -69,7 +69,7 @@ F 3 "" H 5100 2800 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L nixies-us:IN-4 N4
+L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N4
 U 1 1 61C6CBCA
 P 6700 2800
 F 0 "N4" V 6650 2097 45  0000 R CNN
@@ -80,7 +80,7 @@ F 3 "" H 6700 2800 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L nixies-us:IN-6 N10
+L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N10
 U 1 1 61C6CBD0
 P 7850 3100
 F 0 "N10" H 7850 3370 45  0000 C CNN
@@ -91,7 +91,7 @@ F 3 "" H 7850 3100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L nixies-us:IN-6 N9
+L Nixie-Clock-Nixies-rescue:IN-6-nixies-us N9
 U 1 1 61C6CBD6
 P 7850 2600
 F 0 "N9" H 7850 2870 45  0000 C CNN
@@ -102,7 +102,7 @@ F 3 "" H 7850 2600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L nixies-us:IN-4 N5
+L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N5
 U 1 1 61C6E7AE
 P 9000 2800
 F 0 "N5" V 8950 2097 45  0000 R CNN
@@ -113,7 +113,7 @@ F 3 "" H 9000 2800 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L nixies-us:IN-4 N6
+L Nixie-Clock-Nixies-rescue:IN-4-nixies-us N6
 U 1 1 61C6E7B4
 P 10600 2800
 F 0 "N6" V 10550 2097 45  0000 R CNN
