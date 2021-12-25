@@ -4,10 +4,10 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title "Nixie-Clock-Control"
-Date "2021-12-22"
-Rev "ESP32 - 0.5"
-Comp "Konrad"
+Title "Nixie-Clock: Controller"
+Date "2021-12-25"
+Rev "1.0"
+Comp "Konrad Mösch"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -949,7 +949,7 @@ NoConn ~ 6750 2450
 NoConn ~ 6650 2450
 NoConn ~ 6550 2450
 $Comp
-L Nixie-Clock-Controller-rescue:ESP32-DEVKITC-32D-ESP32-DEVKITC-32D IC1
+L nixie-clock:ESP32-DEVKITC-32D IC1
 U 1 1 61C74D2B
 P 5950 1650
 F 0 "IC1" H 5950 2817 50  0000 C CNN
@@ -1422,7 +1422,7 @@ Wire Wire Line
 NoConn ~ 9500 5650
 NoConn ~ 10000 5150
 $Comp
-L Nixie-Clock-Controller-rescue:NCH6300HV-nch6300hv U3
+L nixie-clock:NCH6300HV U3
 U 1 1 61C726B5
 P 9400 3850
 F 0 "U3" H 9500 4065 50  0000 C CNN
@@ -1771,45 +1771,45 @@ Wire Wire Line
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 61F780CD
-P 1950 2450
-F 0 "H1" H 2050 2496 50  0000 L CNN
-F 1 "MountingHole" H 2050 2405 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 2450 50  0001 C CNN
-F 3 "~" H 1950 2450 50  0001 C CNN
-	1    1950 2450
+P 850 750
+F 0 "H1" H 950 796 50  0000 L CNN
+F 1 "MountingHole" H 950 705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 750 50  0001 C CNN
+F 3 "~" H 850 750 50  0001 C CNN
+	1    850  750 
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H2
 U 1 1 61F7A90E
-P 1950 2650
-F 0 "H2" H 2050 2696 50  0000 L CNN
-F 1 "MountingHole" H 2050 2605 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 2650 50  0001 C CNN
-F 3 "~" H 1950 2650 50  0001 C CNN
-	1    1950 2650
+P 10900 800
+F 0 "H2" H 11000 846 50  0000 L CNN
+F 1 "MountingHole" H 11000 755 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 10900 800 50  0001 C CNN
+F 3 "~" H 10900 800 50  0001 C CNN
+	1    10900 800 
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H3
 U 1 1 61F7B280
-P 1950 2850
-F 0 "H3" H 2050 2896 50  0000 L CNN
-F 1 "MountingHole" H 2050 2805 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 2850 50  0001 C CNN
-F 3 "~" H 1950 2850 50  0001 C CNN
-	1    1950 2850
+P 850 7450
+F 0 "H3" H 950 7496 50  0000 L CNN
+F 1 "MountingHole" H 950 7405 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 7450 50  0001 C CNN
+F 3 "~" H 850 7450 50  0001 C CNN
+	1    850  7450
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H4
 U 1 1 61F7BA05
-P 1950 3050
-F 0 "H4" H 2050 3096 50  0000 L CNN
-F 1 "MountingHole" H 2050 3005 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 3050 50  0001 C CNN
-F 3 "~" H 1950 3050 50  0001 C CNN
-	1    1950 3050
+P 10900 6250
+F 0 "H4" H 11000 6296 50  0000 L CNN
+F 1 "MountingHole" H 11000 6205 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 10900 6250 50  0001 C CNN
+F 3 "~" H 10900 6250 50  0001 C CNN
+	1    10900 6250
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
