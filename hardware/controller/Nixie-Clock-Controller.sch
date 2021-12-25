@@ -643,17 +643,6 @@ F 3 "" H 3700 2350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR08
-U 1 1 619C404E
-P 3850 1050
-F 0 "#PWR08" H 3850 900 50  0001 C CNN
-F 1 "+5V" H 3865 1223 50  0000 C CNN
-F 2 "" H 3850 1050 50  0001 C CNN
-F 3 "" H 3850 1050 50  0001 C CNN
-	1    3850 1050
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:R R4
 U 1 1 619EE9B8
 P 1000 3150
@@ -988,7 +977,6 @@ Wire Wire Line
 	5850 750  5850 850 
 Wire Wire Line
 	5750 800  5750 850 
-NoConn ~ 5050 2450
 Wire Wire Line
 	2900 650  6050 650 
 Wire Wire Line
@@ -1209,17 +1197,9 @@ Wire Wire Line
 	3100 1900 2900 1900
 Wire Wire Line
 	2900 1900 2900 650 
-Wire Wire Line
-	3700 1200 3700 1150
-Wire Wire Line
-	3700 1150 3850 1150
-Wire Wire Line
-	3850 1150 3850 1050
-NoConn ~ 5050 850 
 NoConn ~ 6450 2450
 NoConn ~ 6450 850 
 NoConn ~ 6550 850 
-NoConn ~ 5650 850 
 Wire Wire Line
 	8450 3850 8450 2250
 Wire Wire Line
@@ -1230,7 +1210,7 @@ U 1 1 6251F7AD
 P 9600 5450
 F 0 "J2" V 9696 4862 50  0000 R CNN
 F 1 "Nixies-Connector" V 9605 4862 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_2x10_P2.54mm_Horizontal" H 9600 5450 50  0001 C CNN
+F 2 "nixie-clock:PinHeader_2x10_P2.54mm_Horizontal_with_Interlock" H 9600 5450 50  0001 C CNN
 F 3 "~" H 9600 5450 50  0001 C CNN
 	1    9600 5450
 	0    -1   -1   0   
@@ -1739,4 +1719,100 @@ Wire Wire Line
 	10350 3250 10350 3300
 Wire Wire Line
 	10450 2500 10450 3300
+$Comp
+L Connector:Screw_Terminal_01x03 J6
+U 1 1 61CCA78D
+P 4800 3750
+F 0 "J6" V 4672 3930 50  0000 L CNN
+F 1 "power_out" V 4763 3930 50  0000 L CNN
+F 2 "TerminalBlock_RND:TerminalBlock_RND_205-00013_1x03_P5.00mm_Horizontal" H 4800 3750 50  0001 C CNN
+F 3 "~" H 4800 3750 50  0001 C CNN
+	1    4800 3750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4900 3550 4900 3500
+Wire Wire Line
+	4900 3500 5300 3500
+Connection ~ 5300 3500
+Wire Wire Line
+	5150 3050 4800 3050
+Wire Wire Line
+	4800 3050 4800 3550
+Wire Wire Line
+	5050 2450 5050 2500
+Wire Wire Line
+	5050 2500 4700 2500
+Wire Wire Line
+	4700 2500 4700 3550
+Text Label 4850 3050 0    50   ~ 0
+ic2_5v
+Text Label 3900 1150 0    50   ~ 0
+ic2_5v
+Wire Wire Line
+	3900 1150 3700 1150
+Wire Wire Line
+	3700 1150 3700 1200
+$Comp
+L power:GND #PWR0103
+U 1 1 61EC4C44
+P 4700 950
+F 0 "#PWR0103" H 4700 700 50  0001 C CNN
+F 1 "GND" H 4705 777 50  0000 C CNN
+F 2 "" H 4700 950 50  0001 C CNN
+F 3 "" H 4700 950 50  0001 C CNN
+	1    4700 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5650 850  5650 500 
+Wire Wire Line
+	5650 500  4700 500 
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 61F780CD
+P 1950 2450
+F 0 "H1" H 2050 2496 50  0000 L CNN
+F 1 "MountingHole" H 2050 2405 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 2450 50  0001 C CNN
+F 3 "~" H 1950 2450 50  0001 C CNN
+	1    1950 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 61F7A90E
+P 1950 2650
+F 0 "H2" H 2050 2696 50  0000 L CNN
+F 1 "MountingHole" H 2050 2605 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 2650 50  0001 C CNN
+F 3 "~" H 1950 2650 50  0001 C CNN
+	1    1950 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 61F7B280
+P 1950 2850
+F 0 "H3" H 2050 2896 50  0000 L CNN
+F 1 "MountingHole" H 2050 2805 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 2850 50  0001 C CNN
+F 3 "~" H 1950 2850 50  0001 C CNN
+	1    1950 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 61F7BA05
+P 1950 3050
+F 0 "H4" H 2050 3096 50  0000 L CNN
+F 1 "MountingHole" H 2050 3005 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 1950 3050 50  0001 C CNN
+F 3 "~" H 1950 3050 50  0001 C CNN
+	1    1950 3050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 500  4700 950 
+NoConn ~ 5050 850 
 $EndSCHEMATC

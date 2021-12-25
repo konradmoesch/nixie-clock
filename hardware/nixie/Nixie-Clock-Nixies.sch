@@ -195,7 +195,7 @@ U 1 1 61D9E72C
 P 5800 6200
 F 0 "J1" V 5896 5612 50  0000 R CNN
 F 1 "Nixies-Connector" V 5805 5612 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_2x10_P2.54mm_Horizontal" H 5800 6200 50  0001 C CNN
+F 2 "nixie-clock:PinHeader_2x10_P2.54mm_Horizontal_with_Interlock" H 5800 6200 50  0001 C CNN
 F 3 "~" H 5800 6200 50  0001 C CNN
 	1    5800 6200
 	0    -1   -1   0   
@@ -818,4 +818,48 @@ Wire Wire Line
 Connection ~ 3650 3450
 Wire Wire Line
 	3650 3450 3650 5100
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 61CADA22
+P 850 1100
+F 0 "H2" H 950 1146 50  0000 L CNN
+F 1 "MountingHole" H 950 1055 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 1100 50  0001 C CNN
+F 3 "~" H 850 1100 50  0001 C CNN
+	1    850  1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 61CAE12D
+P 850 1300
+F 0 "H3" H 950 1346 50  0000 L CNN
+F 1 "MountingHole" H 950 1255 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 1300 50  0001 C CNN
+F 3 "~" H 850 1300 50  0001 C CNN
+	1    850  1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 61CAE6FB
+P 850 1500
+F 0 "H4" H 950 1546 50  0000 L CNN
+F 1 "MountingHole" H 950 1455 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 1500 50  0001 C CNN
+F 3 "~" H 850 1500 50  0001 C CNN
+	1    850  1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 61CACF00
+P 850 900
+F 0 "H1" H 950 946 50  0000 L CNN
+F 1 "MountingHole" H 950 855 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 850 900 50  0001 C CNN
+F 3 "~" H 850 900 50  0001 C CNN
+	1    850  900 
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
