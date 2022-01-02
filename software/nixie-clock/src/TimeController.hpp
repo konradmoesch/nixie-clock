@@ -5,13 +5,15 @@
 #define TimeController_hpp
 
 #include "Arduino.h"
-#include <time.h>
+#include "types.hpp"
 
 class TimeController {
-  public:
-    void initialize(String timezone, const char* ntp_server);
-    String getShortLocalTime();
-    void printLocalTime();
+public:
+    static void initialize(const Timezone_t& timezone);
+    static String getShortLocalTime();
+    static String getLongTime();
+
+    static void setTimezone(const Timezone_t &timezone);
 };
 
 #endif

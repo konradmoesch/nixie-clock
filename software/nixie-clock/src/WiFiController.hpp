@@ -5,11 +5,12 @@
 #define WiFiController_hpp
 
 #include "Arduino.h"
-#include <WiFi.h>
+#include "types.hpp"
 
 class WiFiController {
   public:
-    void initialize(const char* ssid, const char* password);
+    static void initialize();
+    static void step();
 };
 
 

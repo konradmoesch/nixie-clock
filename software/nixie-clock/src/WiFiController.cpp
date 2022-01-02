@@ -1,90 +1,156 @@
 #include "Arduino.h"
+#include "ArduinoLog.h"
 #include "WiFiController.hpp"
-#include <ArduinoLog.h>
+#include "types.hpp"
 
-#define CONNECT_TIME 10000
-#define TIMEOUTTIME 5000
+#include "TimeController.hpp"
+#include "StorageController.hpp"
 
-/*void startWiFiAP(){
-  WiFi.softAP("nixieclock", "sicher123!");
-  IPAddress myIP = WiFi.softAPIP();
-  Serial.print("AP IP address: ");
-  Serial.println(myIP);
-  Serial.println("config not yet impl!");
-  //server.begin();
-  while (true) {
-    WiFiClient client = server.available();   // listen for incoming clients
-    if (client) {                             // if you get a client,
-      Serial.println("New Client.");           // print a message out the serial port
-      String currentLine = "";                // make a String to hold incoming data from the client
-      while (client.connected()) {            // loop while the client's connected
-        if (client.available()) {             // if there's bytes to read from the client,
-          char c = client.read();             // read a byte, then
-          Serial.write(c);                    // print it out the serial monitor
-          if (c == '\n') {                    // if the byte is a newline character
-  
-            // if the current line is blank, you got two newline characters in a row.
-            // that's the end of the client HTTP request, so send a response:
-            if (currentLine.length() == 0) {
-              // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-              // and a content-type so the client knows what's coming, then a blank line:
-              client.println("HTTP/1.1 200 OK");
-              client.println("Content-type:text/html");
-              client.println();
-  
-              // the content of the HTTP response follows the header:
-              client.println("blA"); 
-  
-              // The HTTP response ends with another blank line:
-              client.println();
-              // break out of the while loop:
-              break;
-            } else {    // if you got a newline, then clear currentLine:
-              currentLine = "";
-            }
-          } else if (c != '\r') {  // if you got anything else but a carriage return character,
-            currentLine += c;      // add it to the end of the currentLine
-          }
-        }
-      }
-      // close the connection:
-      client.stop();
-      Serial.println("Client Disconnected.");
+#include <WiFi.h>
+#include <WebServer.h>
+
+#include <AutoConnect.h>
+
+static const char AUX_TIMEZONE[] PROGMEM = R"(
+{
+  "title": "TimeZone",
+  "uri": "/timezone",
+  "menu": true,
+  "element": [
+    {
+      "name": "caption",
+      "type": "ACText",
+      "value": "Sets the time zone to get the current local time.",
+      "style": "font-family:Arial;font-weight:bold;text-align:center;margin-bottom:10px;color:DarkSlateBlue"
+    },
+    {
+      "name": "timezone",
+      "type": "ACSelect",
+      "label": "Select TZ name",
+      "option": [],
+      "selected": 10
+    },
+    {
+      "name": "newline",
+      "type": "ACElement",
+      "value": "<br>"
+    },
+    {
+      "name": "start",
+      "type": "ACSubmit",
+      "value": "OK",
+      "uri": "/start"
     }
-  }
-  const char* ssid = "foo";
-  const char *password = "bar";
-  delay(10000);
-  WiFi.disconnect();
-  WiFi.begin();
-}*/
+  ]
+}
+)";
 
-void startWifi(const char* ssid, const char* password){
-  Serial.print("Attempting to connect to ");
-  Serial.println(ssid);
-  WiFi.persistent(true);
-  WiFi.begin(ssid, password);
-  //WiFi.begin();
-  size_t start_time = millis();
-  size_t dot_time = millis();
-  while ((WiFi.status() != WL_CONNECTED) && (start_time + CONNECT_TIME) > millis()) {
-    if (dot_time + 250 < millis()) {
-      Serial.print(".");
-      dot_time = millis();
-    }
-  }
+static const Timezone_t TZ[] = {
+        {"Europe/London",        "europe.pool.ntp.org",        0},
+        {"Europe/Berlin",        "europe.pool.ntp.org",        1},
+        {"Europe/Helsinki",      "europe.pool.ntp.org",        2},
+        {"Europe/Moscow",        "europe.pool.ntp.org",        3},
+        {"Asia/Dubai",           "asia.pool.ntp.org",          4},
+        {"Asia/Karachi",         "asia.pool.ntp.org",          5},
+        {"Asia/Dhaka",           "asia.pool.ntp.org",          6},
+        {"Asia/Jakarta",         "asia.pool.ntp.org",          7},
+        {"Asia/Manila",          "asia.pool.ntp.org",          8},
+        {"Asia/Tokyo",           "asia.pool.ntp.org",          9},
+        {"Australia/Brisbane",   "oceania.pool.ntp.org",       10},
+        {"Pacific/Noumea",       "oceania.pool.ntp.org",       11},
+        {"Pacific/Auckland",     "oceania.pool.ntp.org",       12},
+        {"Atlantic/Azores",      "europe.pool.ntp.org",        -1},
+        {"America/Noronha",      "south-america.pool.ntp.org", -2},
+        {"America/Araguaina",    "south-america.pool.ntp.org", -3},
+        {"America/Blanc-Sablon", "north-america.pool.ntp.org", -4},
+        {"America/New_York",     "north-america.pool.ntp.org", -5},
+        {"America/Chicago",      "north-america.pool.ntp.org", -6},
+        {"America/Denver",       "north-america.pool.ntp.org", -7},
+        {"America/Los_Angeles",  "north-america.pool.ntp.org", -8},
+        {"America/Anchorage",    "north-america.pool.ntp.org", -9},
+        {"Pacific/Honolulu",     "north-america.pool.ntp.org", -10},
+        {"Pacific/Samoa",        "oceania.pool.ntp.org",       -11}
+};
 
-  /*if (WiFi.status() != WL_CONNECTED) {
-    startWiFiAP();
-  }*/
-  
-  Serial.println("");
-  Serial.println("WiFi connected.");
-  Serial.println("ESP32 IP address: ");
-  Serial.println(WiFi.localIP());
+WebServer Server;
+
+AutoConnect Portal(Server);
+AutoConnectConfig Config;
+AutoConnectAux Timezone;
+
+void sendRedirect(const String &uri) {
+    Server.sendHeader("Location", uri, true);
+    Server.send(302, "text/plain", "");
+    Server.client().stop();
 }
 
-void WiFiController::initialize(const char* ssid, const char* password) {
-  Log.noticeln("Initializing WiFi");
-  startWifi(ssid, password);
+void rootPage() {
+    String content =
+            "<html>"
+            "<head>"
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+            "<script type=\"text/javascript\">"
+            "setTimeout(\"location.reload()\", 1000);"
+            "</script>"
+            "</head>"
+            "<body>"
+            "<h2 align=\"center\" style=\"color:blue;margin:20px;\">Hello, world</h2>"
+            "<h3 align=\"center\" style=\"color:gray;margin:10px;\">{{DateTime}}</h3>"
+            "<p style=\"text-align:center;\">Reload the page to update the time.</p>"
+            "<p></p><p style=\"padding-top:15px;text-align:center\">" AUTOCONNECT_LINK(COG_24) "</p>"
+            "</body>"
+            "</html>";
+    String dateTime = TimeController::getLongTime();
+
+    content.replace("{{DateTime}}", dateTime);
+    Server.send(200, "text/html", content);
+}
+
+void startPage() {
+    // Retrieve the value of AutoConnectElement with arg function of WebServer class.
+    // Values are accessible with the element name.
+    String tz = Server.arg("timezone");
+
+    for (const auto &timezone: TZ) {
+        String tzName = String(timezone.zone);
+        if (tz.equalsIgnoreCase(tzName)) {
+            StorageController::storeTimezoneConfig(timezone);
+            TimeController::setTimezone(timezone);
+            Serial.println("Time zone: " + tz);
+            Serial.println("ntp server: " + String(timezone.ntpServer));
+            break;
+        }
+    }
+
+    Server.sendHeader("Location", String("http://") + Server.client().localIP().toString() + String("/"));
+    Server.send(302, "text/plain", "");
+    Server.client().flush();
+    Server.client().stop();
+}
+
+void WiFiController::initialize() {
+    Log.noticeln("Initializing WiFi");
+    delay(1000);
+
+    Config.autoReconnect = true;
+    Portal.config(Config);
+
+    Timezone.load(AUX_TIMEZONE);
+    auto &tz = Timezone["timezone"].as<AutoConnectSelect>();
+    for (const auto &timezone: TZ) {
+        tz.add(String(timezone.zone));
+    }
+
+    Portal.join({Timezone});
+
+    Server.on("/", rootPage);
+    Server.on("/start", startPage);
+
+    if (Portal.begin()) {
+        Serial.println("WiFi connected: " + WiFi.localIP().toString());
+    }
+}
+
+void WiFiController::step() {
+    Portal.handleClient();
 }

@@ -1,0 +1,4 @@
+#ifndef NIXIE_CLOCK_CONFIG_HPP
+#define NIXIE_CLOCK_CONFIG_HPP
+#define DEBUG true;
+#endif //NIXIE_CLOCK_CONFIG_HPP

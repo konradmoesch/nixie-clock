@@ -1,19 +1,17 @@
 #include "Arduino.h"
 #include "ArduinoLog.h"
+#include "StorageController.hpp"
 #include "WiFiController.hpp"
 #include "TimeController.hpp"
-#include "NixieController.hpp"
+//#include "NixieController.hpp"
+#include "LcdController.hpp"
+#include "config.hpp"
 
-//WiFiServer server(80);
-
-/*String header;
-
-size_t currentTime = millis();
-size_t previousTime = 0;*/
-
+StorageController storage_controller;
 TimeController time_controller;
 WiFiController wifi_controller;
-NixieController nixie_controller;
+LcdController lcd_controller;
+//NixieController nixie_controller;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
@@ -23,18 +21,20 @@ void setup() {
   Log.begin(LOG_LEVEL_VERBOSE, &Serial, true);
   Log.noticeln("Starting Nixie-Clock");
 
-  wifi_controller.initialize("ssid","password");
-  time_controller.initialize("CET-1CEST,M3.5.0,M10.5.0/3", "pool.ntp.org"); // Europe/Berlin
-  nixie_controller.initialize();
-  
-  //server.begin();
+  WiFiController::initialize();
+  Timezone_t timezone = StorageController::getTimezoneConfig();
+  TimeController::initialize(timezone);
+  //nixie_controller.initialize();
+  LcdController::initialize();
 }
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 // cppcheck-suppress unusedFunction
 void loop() {
-  Serial.println(time_controller.getShortLocalTime());
-  delay(random(500,2000));
-
+    WiFiController::step();
+    Log.noticeln("Time:");
+    Serial.println(String(TimeController::getShortLocalTime()));
+    LcdController::setOutput(String(TimeController::getShortLocalTime()));
+    delay(1000);
 }
