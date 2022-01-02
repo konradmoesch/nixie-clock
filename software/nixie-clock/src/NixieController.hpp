@@ -8,7 +8,8 @@
 
 class NixieController {
   public:
-    void initialize();
+    static void initialize();
+    static void displayDigit(int anode, int digit);
 };
 
 #endif
