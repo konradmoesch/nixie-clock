@@ -35,9 +35,10 @@ void setup() {
 void loop() {
     WiFiController::step();
     Log.noticeln("Time:");
-    auto time = TimeController::getShortLocalTime();
-    NixieController::displayDigit(0, (time[7]-48));
-    Serial.println(time);
+    Serial.println(TimeController::getShortLocalTime());
+    int time[6];
+    TimeController::getTime(time);
+    NixieController::displayNumberString(time);
     LcdController::setOutput(String(TimeController::getShortLocalTime()));
     delay(1000);
 }

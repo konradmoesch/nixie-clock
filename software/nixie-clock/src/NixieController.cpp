@@ -151,3 +151,10 @@ void NixieController::displayDigit(int anode = 0, int digit = 0) {
     delay(2);
     digitalWrite(anodePin, LOW);
 }
+
+void NixieController::displayNumberString(int string[6]) {
+    for (int i = 0; i< 6; i++) {
+        Serial.println("Displaying " + String(string[i]) + " on nixie #" + i);
+        displayDigit(i, string[i]);
+    }
+}

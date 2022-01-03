@@ -12,8 +12,8 @@ public:
     static void initialize(const Timezone_t& timezone);
     static String getShortLocalTime();
     static String getLongTime();
-
     static void setTimezone(const Timezone_t &timezone);
+    static void getTime(int time[6]);
 };
 
 #endif

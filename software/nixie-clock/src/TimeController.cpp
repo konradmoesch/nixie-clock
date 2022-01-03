@@ -30,6 +30,19 @@ String TimeController::getShortLocalTime() {
     return timeNow;
 }
 
+void TimeController::getTime(int time[6]) {
+    struct tm timeinfo{};
+    if (!getLocalTime(&timeinfo)) {
+        Log.errorln("Failed to obtain time");
+    }
+    time[1]=timeinfo.tm_hour%10;
+    time[0]=(timeinfo.tm_hour-time[1])/10;
+    time[3]=timeinfo.tm_min%10;
+    time[2]=(timeinfo.tm_min-time[3])/10;
+    time[5]=timeinfo.tm_sec%10;
+    time[4]=(timeinfo.tm_sec-time[5])/10;
+}
+
 String TimeController::getLongTime() {
     static const char *wd[7] = {"Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"};
     struct tm *tm;
