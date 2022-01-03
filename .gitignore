@@ -22,9 +22,5 @@ fp-info-cache
 *.ses
 hardware/*/routing/
 
-# Exported BOM files
-*.xml
-*.csv
-
 # Exported pdf files
 *.pdf
