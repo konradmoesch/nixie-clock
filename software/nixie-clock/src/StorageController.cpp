@@ -20,20 +20,23 @@ Timezone_t StorageController::getTimezoneConfig() {
 void StorageController::storeTimezoneConfig(Timezone_t timezoneConfig) {
     prefs.begin(PREFS_NAMESPACE);
     prefs.putBytes(PREFS_KEY, &timezoneConfig, sizeof(Timezone_t));
-    prefs.putBool("VALID", true);
+    prefs.putString("VALID", "true");
     prefs.end();
 }
 
 bool validTZConfig() {
     prefs.begin(PREFS_NAMESPACE, true);
-    bool value = prefs.getBool("VALID");
+    String value = prefs.getString("VALID");
     prefs.end();
-    return value;
+    return value=="true";
 }
 
 void StorageController::initialize() {
     Log.noticeln("Initializing Storage");
     if (!validTZConfig()) {
+        Log.warningln("invalid Config. Setting default values");
         storeTimezoneConfig({"Europe/London","europe.pool.ntp.org",0});
+    } else {
+        Log.noticeln("Valid config");
     }
 }
