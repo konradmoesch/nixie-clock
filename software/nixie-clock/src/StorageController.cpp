@@ -20,7 +20,7 @@ Timezone_t StorageController::getTimezoneConfig() {
 void StorageController::storeTimezoneConfig(Timezone_t timezoneConfig) {
     prefs.begin(PREFS_NAMESPACE);
     prefs.putBytes(PREFS_KEY, &timezoneConfig, sizeof(Timezone_t));
-    prefs.putString("VALID", "true");
+    prefs.putString("VALID", "valid");
     prefs.end();
 }
 
@@ -28,7 +28,7 @@ bool validTZConfig() {
     prefs.begin(PREFS_NAMESPACE, true);
     String value = prefs.getString("VALID");
     prefs.end();
-    return value=="true";
+    return value=="valid";
 }
 
 void StorageController::initialize() {

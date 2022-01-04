@@ -66,8 +66,14 @@ BinaryCodedDecimal_t decimalTo4BitBinary(int decimal_number) {
     return binaryCodedDecimal;
 }
 
+void turnAnodesOff(){
+    for (auto anode: anodes){
+        digitalWrite(anode, LOW);
+    }
+}
+
 void NixieController::displayDigit(int anode = 0, int digit = 0) {
-    Serial.println("Setting Nixie #" + String(anode) + " to display digit:" + String(digit));
+    //Serial.println("Setting Nixie #" + String(anode) + " to display digit:" + String(digit));
     int anodePin;
     int a, b, c, d;
 
@@ -153,8 +159,9 @@ void NixieController::displayDigit(int anode = 0, int digit = 0) {
 }
 
 void NixieController::displayNumberString(int string[6]) {
-    for (int i = 0; i< 6; i++) {
-        Serial.println("Displaying " + String(string[i]) + " on nixie #" + i);
+    for (int i = 0; i<6; i++) {
+        turnAnodesOff();
+        delayMicroseconds(20);
         displayDigit(i, string[i]);
     }
 }
