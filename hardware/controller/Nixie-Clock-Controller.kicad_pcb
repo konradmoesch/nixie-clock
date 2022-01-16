@@ -4384,6 +4384,9 @@
   (gr_line (start 242.57 83.82) (end 242.57 13.97) (layer "Edge.Cuts") (width 0.05) (tstamp 00000000-0000-0000-0000-000061caa7ce))
   (gr_line (start 13.97 83.82) (end 13.97 13.97) (layer "Edge.Cuts") (width 0.05) (tstamp 00000000-0000-0000-0000-000061caa7cf))
   (gr_line (start 242.57 83.82) (end 13.97 83.82) (layer "Edge.Cuts") (width 0.05) (tstamp 47a2dd37-ad02-4281-9a66-8ff7ab400570))
+  (gr_text "Nixie-Clock-Controller\nv1.1 (16.01.2022)\nkonradmoesch" (at 106.3 25.4) (layer "F.SilkS") (tstamp 8162ff1e-dfaa-4d86-b090-962a0005a4b1)
+    (effects (font (size 1.5 1.5) (thickness 0.3)) (justify left))
+  )
 
   (segment (start 116.11 39.515) (end 96.935 39.515) (width 0.25) (layer "F.Cu") (net 1) (tstamp 01422660-08c8-48f3-98ca-26cbe7f98f5b))
   (segment (start 123.19 47.385) (end 118.985 43.18) (width 0.25) (layer "F.Cu") (net 1) (tstamp 08fa8ff6-09a7-484c-b1d9-0e3b7c49bb26))
