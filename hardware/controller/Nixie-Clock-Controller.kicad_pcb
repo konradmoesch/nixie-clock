@@ -7,8 +7,8 @@
   (paper "A4")
   (title_block
     (title "Nixie-Clock: Controller")
-    (date "2021-12-26")
-    (rev "1.0")
+    (date "2022-01-16")
+    (rev "1.1")
     (company "Konrad Mösch")
   )
 
