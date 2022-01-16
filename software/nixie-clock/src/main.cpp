@@ -54,8 +54,8 @@ void setup() {
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 // cppcheck-suppress unusedFunction
 void loop() {
-    Serial.print("loop running on core");
-    Serial.println(xPortGetCoreID());
+    //Serial.print("loop running on core");
+    //Serial.println(xPortGetCoreID());
     WiFiController::step();
     Log.noticeln("Time:");
     Serial.println(TimeController::getShortLocalTime());

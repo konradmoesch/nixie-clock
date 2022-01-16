@@ -161,7 +161,7 @@ void NixieController::displayDigit(int anode = 0, int digit = 0) {
 void NixieController::displayNumberString(int string[6]) {
     for (int i = 0; i<6; i++) {
         turnAnodesOff();
-        delayMicroseconds(20);
+        delayMicroseconds(15);
         displayDigit(i, string[i]);
     }
 }

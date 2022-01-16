@@ -35,12 +35,28 @@ void TimeController::getTime(int time[6]) {
     if (!getLocalTime(&timeinfo)) {
         Log.errorln("Failed to obtain time");
     }
-    time[1]=timeinfo.tm_hour%10;
-    time[0]=(timeinfo.tm_hour-time[1])/10;
-    time[3]=timeinfo.tm_min%10;
-    time[2]=(timeinfo.tm_min-time[3])/10;
-    time[5]=timeinfo.tm_sec%10;
-    time[4]=(timeinfo.tm_sec-time[5])/10;
+    if (timeinfo.tm_sec < 32 && timeinfo.tm_sec > 24) {
+        if (timeinfo.tm_sec > 28) {
+            int year = 1900 + timeinfo.tm_year;
+            time[3] = year % 10;
+            time[2] = (year / 10) % 10;
+            time[1] = (year / 100) % 10;
+            time[0] = (year / 1000);
+        } else {
+            time[1] = timeinfo.tm_mday % 10;
+            time[0] = (timeinfo.tm_mday - time[1]) / 10;
+            time[3] = timeinfo.tm_mon % 10;
+            time[3] = 1;
+            time[2] = (timeinfo.tm_mon - time[3]) / 10;
+        }
+    } else {
+        time[1] = timeinfo.tm_hour % 10;
+        time[0] = (timeinfo.tm_hour / 10) % 10;
+        time[3] = timeinfo.tm_min % 10;
+        time[2] = (timeinfo.tm_min / 10 ) % 10;
+        time[5] = timeinfo.tm_sec % 10;
+        time[4] = (timeinfo.tm_sec / 10) % 10;
+    }
 }
 
 String TimeController::getLongTime() {
