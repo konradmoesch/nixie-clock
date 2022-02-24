@@ -54,11 +54,19 @@ void NixieController::initialize() {
 
 BinaryCodedDecimal_t decimalTo4BitBinary(int decimal_number) {
     BinaryCodedDecimal_t binaryCodedDecimal;
-    if (decimal_number > 15) {
+    if (decimal_number > 9) {
         Log.errorln("error in decimal conversion: number too big");
+        binaryCodedDecimal.a = true;
+        binaryCodedDecimal.b = true;
+        binaryCodedDecimal.c = true;
+        binaryCodedDecimal.d = true;
         return binaryCodedDecimal;
     }
     int binaryNumber[4];
+    binaryNumber[0] = 0;
+    binaryNumber[1] = 0;
+    binaryNumber[2] = 0;
+    binaryNumber[3] = 0;
     int i = 0;
     while (decimal_number > 0) {
         binaryNumber[i] = decimal_number % 2;
@@ -79,85 +87,16 @@ void turnAnodesOff(){
 }
 
 void NixieController::displayDigit(int anode = 0, int digit = 0) {
-    //Serial.println("Setting Nixie #" + String(anode) + " to display digit:" + String(digit));
     int anodePin;
-    int a, b, c, d;
 
     anodePin = anodes[anode];
 
-    switch (digit) {
-        case 0:
-            a = 0;
-            b = 0;
-            c = 0;
-            d = 0;
-            break;
-        case 1:
-            a = 1;
-            b = 0;
-            c = 0;
-            d = 0;
-            break;
-        case 2:
-            a = 0;
-            b = 1;
-            c = 0;
-            d = 0;
-            break;
-        case 3:
-            a = 1;
-            b = 1;
-            c = 0;
-            d = 0;
-            break;
-        case 4:
-            a = 0;
-            b = 0;
-            c = 1;
-            d = 0;
-            break;
-        case 5:
-            a = 1;
-            b = 0;
-            c = 1;
-            d = 0;
-            break;
-        case 6:
-            a = 0;
-            b = 1;
-            c = 1;
-            d = 0;
-            break;
-        case 7:
-            a = 1;
-            b = 1;
-            c = 1;
-            d = 0;
-            break;
-        case 8:
-            a = 0;
-            b = 0;
-            c = 0;
-            d = 1;
-            break;
-        case 9:
-            a = 1;
-            b = 0;
-            c = 0;
-            d = 1;
-            break;
-        default:
-            a = 1;
-            b = 1;
-            c = 1;
-            d = 1;
-            break;
-    }
+    BinaryCodedDecimal_t bcd = decimalTo4BitBinary(digit);
 
-    digitalWrite(SN74141_D, d);
-    digitalWrite(SN74141_C, c);
-    digitalWrite(SN74141_B, b);
-    digitalWrite(SN74141_A, a);
+    digitalWrite(SN74141_D, bcd.d);
+    digitalWrite(SN74141_C, bcd.c);
+    digitalWrite(SN74141_B, bcd.b);
+    digitalWrite(SN74141_A, bcd.a);
 
     digitalWrite(anodePin, HIGH);
     delay(2);
