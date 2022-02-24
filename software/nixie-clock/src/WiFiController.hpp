@@ -6,11 +6,15 @@
 
 #include "Arduino.h"
 #include "types.hpp"
+#include "NixieController.hpp"
+#include <WebServer.h>
+#include <ESPAsyncWebServer.h>
 
 class WiFiController {
   public:
-    static void initialize();
+    static void initialize(NixieController);
     static void step();
+    static AsyncWebServer& getAsyncServer();
 };
 
 

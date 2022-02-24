@@ -29,6 +29,9 @@
 #define ANODE_4 26
 #define ANODE_5 27
 #define ANODE_6 14
+
+#define POWERPIN 22
+
 const int anodes[] = {ANODE_1, ANODE_2, ANODE_3, ANODE_4, ANODE_5, ANODE_6};
 
 void NixieController::initialize() {
@@ -44,6 +47,9 @@ void NixieController::initialize() {
     pinMode(ANODE_4, OUTPUT);
     pinMode(ANODE_5, OUTPUT);
     pinMode(ANODE_6, OUTPUT);
+
+    pinMode(POWERPIN,OUTPUT);
+
 }
 
 BinaryCodedDecimal_t decimalTo4BitBinary(int decimal_number) {
@@ -164,4 +170,10 @@ void NixieController::displayNumberString(int string[6]) {
         delayMicroseconds(15);
         displayDigit(i, string[i]);
     }
+}
+
+void NixieController::togglePowerSupply(){
+    this->powerStatus = !this->powerStatus;
+    Log.noticeln(("Setting power pin to " + String(this->powerStatus)).c_str());
+    digitalWrite(POWERPIN,this->powerStatus);
 }

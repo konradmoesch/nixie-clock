@@ -4,12 +4,13 @@
 #include "types.hpp"
 
 #include "TimeController.hpp"
+#include "NixieController.hpp"
 #include "StorageController.hpp"
 
 #include <WiFi.h>
-#include <WebServer.h>
 
 #include <AutoConnect.h>
+#include "config.hpp"
 
 static const char AUX_TIMEZONE[] PROGMEM = R"(
 {
@@ -72,11 +73,14 @@ static const Timezone_t TZ[] = {
         {"Pacific/Samoa",        "oceania.pool.ntp.org",       -11}
 };
 
+const char* fw_ver = "current version: " NIXIECLOCK_VERSION;
 WebServer Server;
 
 AutoConnect Portal(Server);
 AutoConnectConfig Config;
 AutoConnectAux Timezone;
+
+AsyncWebServer AsyncServer(8080);
 
 void sendRedirect(const String &uri) {
     Server.sendHeader("Location", uri, true);
@@ -128,11 +132,52 @@ void startPage() {
     Server.client().stop();
 }
 
-void WiFiController::initialize() {
+NixieController nixieController;
+
+void deleteAllCredentials() {
+    AutoConnectCredential credential;
+    station_config_t config;
+    uint8_t ent = credential.entries();
+    Serial.println(String(ent) + " saved credentials");
+    Serial.println("Deleting all wifi credentials");
+
+    while (ent--) {
+        int8_t id = 0;
+        credential.load(id, &config);
+        credential.del((const char*)&config.ssid[0]);
+    }
+}
+void togglePowerAndWait(){
+    nixieController.togglePowerSupply();
+    delay(1000);
+}
+void otaError(char errorCode){
+    Serial.println("OTA error: " + errorCode);
+    togglePowerAndWait();
+}
+void WiFiController::initialize(NixieController nixie_controller) {
     Log.noticeln("Initializing WiFi");
     delay(1000);
 
+    nixieController = nixie_controller;
+
+    Config.ota = AC_OTA_BUILTIN;
+    Config.otaExtraCaption = fw_ver;
     Config.autoReconnect = true;
+    Config.tickerPort = 12;
+    Config.ticker = true;
+    Portal.onOTAStart(togglePowerAndWait);
+    Portal.onOTAEnd(togglePowerAndWait);
+    Portal.onOTAError(otaError);
+    //deleteAllCredentials();
+    pinMode(12,OUTPUT);
+    for (int i = 0; i<2; i++){
+        digitalWrite(12, LOW);
+        delay(2000);
+        digitalWrite(12, HIGH);
+        delay(1000);
+    }
+
     Portal.config(Config);
 
     Timezone.load(AUX_TIMEZONE);
@@ -149,8 +194,13 @@ void WiFiController::initialize() {
     if (Portal.begin()) {
         Serial.println("WiFi connected: " + WiFi.localIP().toString());
     }
+    AsyncServer.begin();
 }
 
 void WiFiController::step() {
     Portal.handleClient();
+}
+
+AsyncWebServer& WiFiController::getAsyncServer() {
+    return AsyncServer;
 }
