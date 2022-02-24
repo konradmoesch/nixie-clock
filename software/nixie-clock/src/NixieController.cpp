@@ -1,7 +1,4 @@
-#include "Arduino.h"
 #include "NixieController.hpp"
-#include "ArduinoLog.h"
-#include "types.hpp"
 
 // SN74141 : True Table
 //D C B A #
@@ -16,13 +13,11 @@
 //H,L,L,L 8
 //H,L,L,H 9
 
-// SN74141
 #define SN74141_A 19
 #define SN74141_B 18
 #define SN74141_C 5
 #define SN74141_D 17
 
-// anodes
 #define ANODE_1 32
 #define ANODE_2 33
 #define ANODE_3 25
@@ -30,12 +25,14 @@
 #define ANODE_5 27
 #define ANODE_6 14
 
-#define POWERPIN 22
+#define POWER_PIN 22
+#define DELIMITER_PIN 23
 
 const int anodes[] = {ANODE_1, ANODE_2, ANODE_3, ANODE_4, ANODE_5, ANODE_6};
 
 void NixieController::initialize() {
     Log.noticeln("Initializing nixies");
+    powerStatus = OFF;
     pinMode(SN74141_A, OUTPUT);
     pinMode(SN74141_B, OUTPUT);
     pinMode(SN74141_C, OUTPUT);
@@ -48,7 +45,7 @@ void NixieController::initialize() {
     pinMode(ANODE_5, OUTPUT);
     pinMode(ANODE_6, OUTPUT);
 
-    pinMode(POWERPIN,OUTPUT);
+    pinMode(POWER_PIN, OUTPUT);
 
 }
 
@@ -80,8 +77,8 @@ BinaryCodedDecimal_t decimalTo4BitBinary(int decimal_number) {
     return binaryCodedDecimal;
 }
 
-void turnAnodesOff(){
-    for (auto anode: anodes){
+void turnAnodesOff() {
+    for (auto anode: anodes) {
         digitalWrite(anode, LOW);
     }
 }
@@ -104,15 +101,23 @@ void NixieController::displayDigit(int anode = 0, int digit = 0) {
 }
 
 void NixieController::displayNumberString(int string[6]) {
-    for (int i = 0; i<6; i++) {
+    for (int i = 0; i < 6; i++) {
         turnAnodesOff();
         delayMicroseconds(15);
         displayDigit(i, string[i]);
     }
 }
 
-void NixieController::togglePowerSupply(){
-    this->powerStatus = !this->powerStatus;
-    Log.noticeln(("Setting power pin to " + String(this->powerStatus)).c_str());
-    digitalWrite(POWERPIN,this->powerStatus);
+void NixieController::togglePowerSupply() {
+    powerStatus = (powerStatus == ON) ? OFF : ON;
+    Log.noticeln(("Setting power pin to " + std::string(powerStatus == ON ? "ON" : "OFF")).c_str());
+    digitalWrite(POWER_PIN, powerStatus);
 }
+
+#if USE_DELIMITERS
+void NixieController::toggleDelimiters() {
+    delimiterStatus = (delimiterStatus == ON) ? OFF : ON;
+    Log.noticeln(("Setting delimiter pin to " + String(this->delimiterStatus)).c_str());
+    digitalWrite(DELIMITER_PIN, this->delimiterStatus);
+}
+#endif

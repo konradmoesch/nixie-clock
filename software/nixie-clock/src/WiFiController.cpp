@@ -1,16 +1,4 @@
-#include "Arduino.h"
-#include "ArduinoLog.h"
 #include "WiFiController.hpp"
-#include "types.hpp"
-
-#include "TimeController.hpp"
-#include "NixieController.hpp"
-#include "StorageController.hpp"
-
-#include <WiFi.h>
-
-#include <AutoConnect.h>
-#include "config.hpp"
 
 static const char AUX_TIMEZONE[] PROGMEM = R"(
 {
@@ -73,14 +61,13 @@ static const Timezone_t TZ[] = {
         {"Pacific/Samoa",        "oceania.pool.ntp.org",       -11}
 };
 
-const char* fw_ver = "current version: " NIXIECLOCK_VERSION;
+const char *fw_ver = "current version: " NIXIECLOCK_VERSION;
 WebServer Server;
 
 AutoConnect Portal(Server);
 AutoConnectConfig Config;
 AutoConnectAux Timezone;
 
-AsyncWebServer AsyncServer(8080);
 
 void sendRedirect(const String &uri) {
     Server.sendHeader("Location", uri, true);
@@ -144,20 +131,24 @@ void deleteAllCredentials() {
     while (ent--) {
         int8_t id = 0;
         credential.load(id, &config);
-        credential.del((const char*)&config.ssid[0]);
+        credential.del((const char *) &config.ssid[0]);
     }
 }
-void togglePowerAndWait(){
+
+void togglePowerAndWait() {
     nixieController.togglePowerSupply();
     delay(1000);
 }
-void otaError(char errorCode){
-    Serial.println("OTA error: " + errorCode);
+
+void otaError(char errorCode) {
+    Serial.println("OTA error: " + String(errorCode));
     togglePowerAndWait();
 }
+
 void WiFiController::initialize(NixieController nixie_controller) {
     Log.noticeln("Initializing WiFi");
     delay(1000);
+    asyncWebServer = AsyncWebServer(8080);
 
     nixieController = nixie_controller;
 
@@ -170,8 +161,8 @@ void WiFiController::initialize(NixieController nixie_controller) {
     Portal.onOTAEnd(togglePowerAndWait);
     Portal.onOTAError(otaError);
     //deleteAllCredentials();
-    pinMode(12,OUTPUT);
-    for (int i = 0; i<2; i++){
+    pinMode(12, OUTPUT);
+    for (int i = 0; i < 2; i++) {
         digitalWrite(12, LOW);
         delay(2000);
         digitalWrite(12, HIGH);
@@ -194,13 +185,15 @@ void WiFiController::initialize(NixieController nixie_controller) {
     if (Portal.begin()) {
         Serial.println("WiFi connected: " + WiFi.localIP().toString());
     }
-    AsyncServer.begin();
+    asyncWebServer.begin();
 }
 
 void WiFiController::step() {
     Portal.handleClient();
 }
 
-AsyncWebServer& WiFiController::getAsyncServer() {
-    return AsyncServer;
+AsyncWebServer &WiFiController::getAsyncServer() {
+    return asyncWebServer;
 }
+
+WiFiController::WiFiController() : asyncWebServer{8080} {}

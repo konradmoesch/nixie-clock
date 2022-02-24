@@ -3,11 +3,18 @@
 
 #include "Arduino.h"
 #include "types.hpp"
+#include "NixieController.hpp"
 #include <ArduinoLog.h>
+#include <OneButton.h>
 
 class IOController {
 public:
-    static void initialize();
+    void initialize();
+
+    void step();
+
+private:
+    OneButton button1;
 };
 
 

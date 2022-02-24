@@ -6,6 +6,7 @@
 
 #include "Arduino.h"
 #include "types.hpp"
+#include <ArduinoLog.h>
 
 class TimeController {
 public:

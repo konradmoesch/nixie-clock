@@ -2,11 +2,17 @@
 #define NIXIE_CLOCK_LCDCONTROLLER_HPP
 
 #include "Arduino.h"
+#include "ArduinoLog.h"
+#include <LiquidCrystal_I2C.h>
 
 class LcdController {
 public:
-    static void initialize();
-    static void setOutput(const String& text);
+    void initialize();
+
+    void setOutput(const String &text);
+
+private:
+    LiquidCrystal_I2C lcd;
 };
 
 

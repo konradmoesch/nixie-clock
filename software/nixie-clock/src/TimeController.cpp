@@ -1,7 +1,4 @@
-#include "Arduino.h"
 #include "TimeController.hpp"
-#include "types.hpp"
-#include <ArduinoLog.h>
 
 void TimeController::setTimezone(const Timezone_t &timezone) {
     Log.noticeln("Setting Timezone to %s\n", timezone.zone);

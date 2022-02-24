@@ -25,13 +25,13 @@ void SerialController::print(const char message[]) {
     Serial.print(message);
 }
 
-size_t webSerialWrite(uint8_t c) {
+void webSerialWrite(uint8_t c) {
     auto c_char = reinterpret_cast<char *>(&c);
     if (c==10)
         WebSerial.println("");
     else WebSerial.print(c_char);
 }
-size_t webSerialWriteBuffer(const uint8_t *buffer, size_t size) {
+void webSerialWriteBuffer(const uint8_t *buffer, size_t size) {
     while (size--) {
         uint8_t buf_elem = (*buffer--);
         if (buf_elem==10)
