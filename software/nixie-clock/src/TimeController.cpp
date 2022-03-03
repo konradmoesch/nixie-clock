@@ -27,39 +27,6 @@ String TimeController::getShortLocalTime() {
     return timeNow;
 }
 
-void TimeController::getTime(int time[6]) {
-    struct tm timeinfo{};
-    if (!getLocalTime(&timeinfo)) {
-        Log.errorln("Failed to obtain time");
-    }
-    if (timeinfo.tm_sec < 32 && timeinfo.tm_sec > 24) {
-        if (timeinfo.tm_sec > 28) {
-            int year = 1900 + timeinfo.tm_year;
-            time[5] = year % 10;
-            time[4] = (year / 10) % 10;
-            time[3] = (year / 100) % 10;
-            time[2] = (year / 1000);
-            time[1] = 10;
-            time[0] = 10;
-        } else {
-            int month = timeinfo.tm_mon + 1;
-            time[1] = timeinfo.tm_mday % 10;
-            time[0] = (timeinfo.tm_mday - time[1]) / 10;
-            time[2] = 10;
-            time[4] = month % 10;
-            time[3] = (month - time[4]) / 10;
-            time[5] = 10;
-        }
-    } else {
-        time[1] = timeinfo.tm_hour % 10;
-        time[0] = (timeinfo.tm_hour / 10) % 10;
-        time[3] = timeinfo.tm_min % 10;
-        time[2] = (timeinfo.tm_min / 10) % 10;
-        time[5] = timeinfo.tm_sec % 10;
-        time[4] = (timeinfo.tm_sec / 10) % 10;
-    }
-}
-
 String TimeController::getLongTime() {
     static const char *wd[7] = {"Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"};
     struct tm *tm;

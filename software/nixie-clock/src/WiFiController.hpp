@@ -12,6 +12,7 @@
 #include "NixieController.hpp"
 #include "TimeController.hpp"
 #include "StorageController.hpp"
+#include "InformationProxy.hpp"
 
 #include <WebServer.h>
 #include <ESPAsyncWebServer.h>
@@ -20,16 +21,20 @@
 
 class WiFiController {
 public:
-    WiFiController();
+    explicit WiFiController(InformationProxy* proxy);
     void initialize(NixieController);
 
-    static void step();
+    void step();
 
     AsyncWebServer &getAsyncServer();
 
 private:
-    WebServer webServer;
-    AsyncWebServer asyncWebServer;
+    AutoConnect _portal;
+    AutoConnectConfig _autoConnectConfig;
+    //WebServer webServer;
+    AsyncWebServer _asyncWebServer;
+    InformationProxy* _informationProxy;
+
 };
 
 

@@ -1,7 +1,7 @@
 #ifndef NIXIE_CLOCK_CONFIG_HPP
 #define NIXIE_CLOCK_CONFIG_HPP
-#define DEBUG true
-#define NIXIECLOCK_VERSION "0.1"
+#define DEBUG false
+#define NIXIECLOCK_VERSION "0.5"
 #define USE_DELIMITERS false
 #define USE_LCD false
 #endif //NIXIE_CLOCK_CONFIG_HPP

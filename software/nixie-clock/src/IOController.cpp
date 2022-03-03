@@ -2,26 +2,71 @@
 
 #define INPUT1 36
 
-void printLongPress(){
-    Serial.println("Long press");
-}
-void printSinglePress(){
-    Serial.println("Single press");
-}
-void printDoublePress(){
-    Serial.println("Double press");
-}
+template <typename T>
+struct Callback1;
 
-void IOController::initialize(){
-    button1 = OneButton(INPUT1, true);
-    button1.attachLongPressStop(printLongPress);
-    button1.attachClick(printSinglePress);
-    button1.attachDoubleClick(printDoublePress);
+template <typename Ret, typename... Params>
+struct Callback1<Ret(Params...)> {
+    template <typename... Args>
+    static Ret callback(Args... args) {
+        return func(args...);
+    }
+    static std::function<Ret(Params...)> func;
+};
 
+template <typename Ret, typename... Params>
+std::function<Ret(Params...)> Callback1<Ret(Params...)>::func;
+
+template <typename T>
+struct Callback2;
+
+template <typename Ret, typename... Params>
+struct Callback2<Ret(Params...)> {
+    template <typename... Args>
+    static Ret callback(Args... args) {
+        return func(args...);
+    }
+    static std::function<Ret(Params...)> func;
+};
+
+template <typename Ret, typename... Params>
+std::function<Ret(Params...)> Callback2<Ret(Params...)>::func;
+
+template <typename T>
+struct Callback3;
+
+template <typename Ret, typename... Params>
+struct Callback3<Ret(Params...)> {
+    template <typename... Args>
+    static Ret callback(Args... args) {
+        return func(args...);
+    }
+    static std::function<Ret(Params...)> func;
+};
+
+template <typename Ret, typename... Params>
+std::function<Ret(Params...)> Callback3<Ret(Params...)>::func;
+
+void IOController::initialize() {
     Log.noticeln("Initializing I/O");
-    pinMode(INPUT1, INPUT);
+    _button = OneButton(INPUT1, true);
+
+    Callback1<void(void)>::func = std::bind(&InformationProxy::nextProvider, &*_informationProxy);
+    auto funcNextProvider = static_cast<callbackFunction>(Callback1<void(void)>::callback);
+    _button.attachClick(funcNextProvider);
+
+    Callback2<void(void)>::func = std::bind(&InformationProxy::toggleNixiePower, &*_informationProxy);
+    auto funcTogglePower = static_cast<callbackFunction>(Callback2<void(void)>::callback);
+    _button.attachLongPressStop(funcTogglePower);
+
+    Callback3<void(void)>::func = std::bind(&InformationProxy::toggleNixiePoison, &*_informationProxy);
+    auto funcTogglePoison = static_cast<callbackFunction>(Callback3<void(void)>::callback);
+    _button.attachDoubleClick(funcTogglePoison);
+
 }
 
 void IOController::step() {
-    button1.tick();
+    _button.tick();
 }
+
+IOController::IOController(InformationProxy* proxy) : _informationProxy{proxy} {}

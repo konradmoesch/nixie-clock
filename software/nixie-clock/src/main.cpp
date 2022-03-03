@@ -6,28 +6,43 @@
 #include "NixieController.hpp"
 #include "SerialController.hpp"
 #include "IOController.hpp"
+#include "InformationProxy.hpp"
+
 #if USE_LCD
 #include "LcdController.hpp"
 #endif
+
 #include "config.hpp"
 
 StorageController storage_controller;
 TimeController time_controller;
-WiFiController wifi_controller;
 SerialController serial_controller;
 #if USE_LCD
 LcdController lcd_controller;
 #endif
 NixieController nixie_controller;
-IOController io_controller;
+InformationProxy information_proxy(&nixie_controller);
+WiFiController wifi_controller(&information_proxy);
+IOController io_controller(&information_proxy);
 
-TaskHandle_t NixieTask;
+TaskHandle_t SecondTask;
 
 [[noreturn]] void NixieLoop(void *parameter) {
-    int currentTime[6];
     while (true) {
-        TimeController::getTime(currentTime);
-        NixieController::displayNumberString(currentTime);
+        nixie_controller.displayValues();
+    }
+}
+
+[[noreturn]] void ControlLoop(void *parameter) {
+    while (true) {
+        wifi_controller.step();
+        information_proxy.step();
+        io_controller.step();
+        //Log.noticeln(("Time: " + TimeController::getShortLocalTime()).c_str());
+#if USE_LCD
+        LcdController::setOutput(String(TimeController::getShortLocalTime()));
+#endif
+        delay(10);
     }
 }
 
@@ -52,34 +67,18 @@ void setup() {
 
     xTaskCreatePinnedToCore(
             NixieLoop,
-            "NixieTask",
+            "SecondTask",
             10000,
             nullptr,
             0,
-            &NixieTask,
+            &SecondTask,
             0);
     Log.noticeln("Initialization finished");
 }
-
-int lastState = HIGH;
-int currentState;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 // cppcheck-suppress unusedFunction
 void loop() {
-    WiFiController::step();
-
-    currentState = digitalRead(36);
-    if (lastState == LOW && currentState == HIGH)
-        nixie_controller.togglePowerSupply();
-
-    lastState = currentState;
-
-    Log.noticeln(("Time: " + TimeController::getShortLocalTime()).c_str());
-    io_controller.step();
-#if USE_LCD
-    LcdController::setOutput(String(TimeController::getShortLocalTime()));
-#endif
-    delay(1000);
+    ControlLoop(nullptr);
 }

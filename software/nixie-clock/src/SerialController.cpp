@@ -4,7 +4,7 @@ SerialController::SerialController()= default;
 
 void SerialController::begin(unsigned long baud, AsyncWebServer& asyncWebServer) {
     Serial.begin(baud);
-    //WebSerial.begin(&asyncWebServer);
+    //WebSerial.begin(&_asyncWebServer);
 }
 
 void SerialController::println(const String& message) {

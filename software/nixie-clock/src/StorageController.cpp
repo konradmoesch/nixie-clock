@@ -34,7 +34,7 @@ void StorageController::initialize() {
     Log.noticeln("Initializing Storage");
     if (!validTZConfig()) {
         Log.warningln("invalid Config. Setting default values");
-        storeTimezoneConfig({"Europe/Berlin","europe.pool.ntp.org",0});
+        storeTimezoneConfig({"Europe/Berlin","europe.pool.ntp.org",1});
     } else {
         Log.noticeln("Valid config");
     }

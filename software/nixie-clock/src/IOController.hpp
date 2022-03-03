@@ -3,18 +3,21 @@
 
 #include "Arduino.h"
 #include "types.hpp"
-#include "NixieController.hpp"
 #include <ArduinoLog.h>
 #include <OneButton.h>
+#include "InformationProxy.hpp"
 
 class IOController {
 public:
+    explicit IOController(InformationProxy* proxy);
+
     void initialize();
 
     void step();
 
 private:
-    OneButton button1;
+    OneButton _button;
+    InformationProxy* _informationProxy;
 };
 
 

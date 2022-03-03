@@ -13,9 +13,11 @@ class NixieController {
 public:
     void initialize();
 
-    static void displayDigit(int anode, int digit);
+    static void displayBCD(int anode, BinaryCodedDecimal_t binaryCodedDecimal);
 
-    static void displayNumberString(int string[6]);
+    void displayValues();
+
+    void setNixieValues(NixieValues_t nixieValues);
 
     void togglePowerSupply();
 
@@ -24,10 +26,16 @@ public:
 #endif
 
 private:
-    PowerStatus powerStatus;
+    PowerStatus powerStatus = OFF;
 #if USE_DELIMITERS
-    PowerStatus delimiterStatus;
+    PowerStatus delimiterStatus = OFF;
 #endif
+    BinaryCodedDecimal_t bcdValues[6];
+    BinaryCodedDecimal_t testBCD;
+    bool testA;
+    bool testB;
+    bool testC;
+    bool testD;
 };
 
 #endif

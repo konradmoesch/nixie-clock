@@ -52,7 +52,7 @@ void NixieController::initialize() {
 BinaryCodedDecimal_t decimalTo4BitBinary(int decimal_number) {
     BinaryCodedDecimal_t binaryCodedDecimal;
     if (decimal_number > 9) {
-        Log.errorln("error in decimal conversion: number too big");
+        Log.warningln("error in decimal conversion: number too big");
         binaryCodedDecimal.a = true;
         binaryCodedDecimal.b = true;
         binaryCodedDecimal.c = true;
@@ -83,28 +83,24 @@ void turnAnodesOff() {
     }
 }
 
-void NixieController::displayDigit(int anode = 0, int digit = 0) {
-    int anodePin;
+void NixieController::displayBCD(int anode, BinaryCodedDecimal_t binaryCodedDecimal) {
+    int anodePin = anodes[anode];
 
-    anodePin = anodes[anode];
-
-    BinaryCodedDecimal_t bcd = decimalTo4BitBinary(digit);
-
-    digitalWrite(SN74141_D, bcd.d);
-    digitalWrite(SN74141_C, bcd.c);
-    digitalWrite(SN74141_B, bcd.b);
-    digitalWrite(SN74141_A, bcd.a);
+    digitalWrite(SN74141_D, binaryCodedDecimal.d);
+    digitalWrite(SN74141_C, binaryCodedDecimal.c);
+    digitalWrite(SN74141_B, binaryCodedDecimal.b);
+    digitalWrite(SN74141_A, binaryCodedDecimal.a);
 
     digitalWrite(anodePin, HIGH);
     delay(2);
     digitalWrite(anodePin, LOW);
 }
 
-void NixieController::displayNumberString(int string[6]) {
+void NixieController::displayValues() {
     for (int i = 0; i < 6; i++) {
         turnAnodesOff();
         delayMicroseconds(15);
-        displayDigit(i, string[i]);
+        displayBCD(i, this->bcdValues[i]);
     }
 }
 
@@ -112,6 +108,15 @@ void NixieController::togglePowerSupply() {
     powerStatus = (powerStatus == ON) ? OFF : ON;
     Log.noticeln(("Setting power pin to " + std::string(powerStatus == ON ? "ON" : "OFF")).c_str());
     digitalWrite(POWER_PIN, powerStatus);
+}
+
+void NixieController::setNixieValues(NixieValues_t nixieValues) {
+    bcdValues[0] = decimalTo4BitBinary(nixieValues.nixie1);
+    bcdValues[1] = decimalTo4BitBinary(nixieValues.nixie2);
+    bcdValues[2] = decimalTo4BitBinary(nixieValues.nixie3);
+    bcdValues[3] = decimalTo4BitBinary(nixieValues.nixie4);
+    bcdValues[4] = decimalTo4BitBinary(nixieValues.nixie5);
+    bcdValues[5] = decimalTo4BitBinary(nixieValues.nixie6);
 }
 
 #if USE_DELIMITERS

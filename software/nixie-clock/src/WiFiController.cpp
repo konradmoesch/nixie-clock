@@ -34,6 +34,40 @@ static const char AUX_TIMEZONE[] PROGMEM = R"(
 }
 )";
 
+static const char AUX_INFORMATION_PROVIDER[] PROGMEM = R"(
+{
+  "title": "Mode",
+  "uri": "/informationprovider",
+  "menu": true,
+  "element": [
+    {
+      "name": "caption",
+      "type": "ACText",
+      "value": "Sets the current display mode.",
+      "style": "font-family:Arial;font-weight:bold;text-align:center;margin-bottom:10px;color:DarkSlateBlue"
+    },
+    {
+      "name": "provider",
+      "type": "ACSelect",
+      "label": "Select Mode",
+      "option": [],
+      "selected": 10
+    },
+    {
+      "name": "newline",
+      "type": "ACElement",
+      "value": "<br>"
+    },
+    {
+      "name": "start",
+      "type": "ACSubmit",
+      "value": "OK",
+      "uri": "/start"
+    }
+  ]
+}
+)";
+
 static const Timezone_t TZ[] = {
         {"Europe/London",        "europe.pool.ntp.org",        0},
         {"Europe/Berlin",        "europe.pool.ntp.org",        1},
@@ -61,18 +95,21 @@ static const Timezone_t TZ[] = {
         {"Pacific/Samoa",        "oceania.pool.ntp.org",       -11}
 };
 
+static const InformationProvider_t providers[] = {
+        {"Time", 0},
+        {"Date",1},
+        {"Year",2}
+};
+
 const char *fw_ver = "current version: " NIXIECLOCK_VERSION;
-WebServer Server;
 
-AutoConnect Portal(Server);
-AutoConnectConfig Config;
-AutoConnectAux Timezone;
-
+AutoConnectAux Timezone, InformationProvider;
+WebServer webServer;
 
 void sendRedirect(const String &uri) {
-    Server.sendHeader("Location", uri, true);
-    Server.send(302, "text/plain", "");
-    Server.client().stop();
+    webServer.sendHeader("Location", uri, true);
+    webServer.send(302, "text/plain", "");
+    webServer.client().stop();
 }
 
 void rootPage() {
@@ -94,13 +131,13 @@ void rootPage() {
     String dateTime = TimeController::getLongTime();
 
     content.replace("{{DateTime}}", dateTime);
-    Server.send(200, "text/html", content);
+    webServer.send(200, "text/html", content);
 }
 
 void startPage() {
     // Retrieve the value of AutoConnectElement with arg function of WebServer class.
     // Values are accessible with the element name.
-    String tz = Server.arg("timezone");
+    String tz = webServer.arg("timezone");
 
     for (const auto &timezone: TZ) {
         String tzName = String(timezone.zone);
@@ -113,10 +150,20 @@ void startPage() {
         }
     }
 
-    Server.sendHeader("Location", String("http://") + Server.client().localIP().toString() + String("/"));
-    Server.send(302, "text/plain", "");
-    Server.client().flush();
-    Server.client().stop();
+    /*String provider = webServer.arg("provider");
+
+    for (const auto &currentProvider: providers) {
+        String providerName = String(currentProvider.name);
+        if (provider.equalsIgnoreCase(providerName)) {
+            _informationProxy->setProvider(currentProvider.providerIndex);
+            break;
+        }
+    }*/
+
+    webServer.sendHeader("Location", String("http://") + webServer.client().localIP().toString() + String("/"));
+    webServer.send(302, "text/plain", "");
+    webServer.client().flush();
+    webServer.client().stop();
 }
 
 NixieController nixieController;
@@ -148,18 +195,28 @@ void otaError(char errorCode) {
 void WiFiController::initialize(NixieController nixie_controller) {
     Log.noticeln("Initializing WiFi");
     delay(1000);
-    asyncWebServer = AsyncWebServer(8080);
+    _asyncWebServer = AsyncWebServer(8080);
+
+    /*struct rootPageCallback: public Callback<void(void)>{};
+    rootPageCallback::func = std::bind(&WiFiController::_rootPage, this);
+    auto funcRootPage = static_cast<void(*)()>(rootPageCallback::callback);*/
+
+    /*struct startPageCallback: public Callback<void(void)>{};
+    startPageCallback::func = std::bind(&WiFiController::_startPage, this);
+    auto funcStartPage = static_cast<void(*)()>(startPageCallback::callback);*/
 
     nixieController = nixie_controller;
 
-    Config.ota = AC_OTA_BUILTIN;
-    Config.otaExtraCaption = fw_ver;
-    Config.autoReconnect = true;
-    Config.tickerPort = 12;
-    Config.ticker = true;
-    Portal.onOTAStart(togglePowerAndWait);
-    Portal.onOTAEnd(togglePowerAndWait);
-    Portal.onOTAError(otaError);
+    _autoConnectConfig.ota = AC_OTA_BUILTIN;
+    _autoConnectConfig.otaExtraCaption = fw_ver;
+    _autoConnectConfig.autoReconnect = true;
+    _autoConnectConfig.tickerPort = 12;
+    _autoConnectConfig.ticker = true;
+    _autoConnectConfig.apid = "nixie-clock";
+    _autoConnectConfig.homeUri = "nixie-clock";
+    _portal.onOTAStart(togglePowerAndWait);
+    _portal.onOTAEnd(togglePowerAndWait);
+    _portal.onOTAError(otaError);
     //deleteAllCredentials();
     pinMode(12, OUTPUT);
     for (int i = 0; i < 2; i++) {
@@ -169,31 +226,38 @@ void WiFiController::initialize(NixieController nixie_controller) {
         delay(1000);
     }
 
-    Portal.config(Config);
+    _portal.config(_autoConnectConfig);
 
     Timezone.load(AUX_TIMEZONE);
     auto &tz = Timezone["timezone"].as<AutoConnectSelect>();
     for (const auto &timezone: TZ) {
         tz.add(String(timezone.zone));
     }
+    _portal.join({Timezone});
 
-    Portal.join({Timezone});
+    /*InformationProvider.load(AUX_INFORMATION_PROVIDER);
+    auto &provider = InformationProvider["provider"].as<AutoConnectSelect>();
+    for (const auto &currentProvider: providers) {
+        provider.add(String(currentProvider.name));
+    }
+    _portal.join({InformationProvider});*/
 
-    Server.on("/", rootPage);
-    Server.on("/start", startPage);
+    webServer.on("/", rootPage);
+    webServer.on("/start", startPage);
 
-    if (Portal.begin()) {
+    if (_portal.begin()) {
         Serial.println("WiFi connected: " + WiFi.localIP().toString());
     }
-    asyncWebServer.begin();
+    _asyncWebServer.begin();
 }
 
 void WiFiController::step() {
-    Portal.handleClient();
+    _portal.handleClient();
 }
 
 AsyncWebServer &WiFiController::getAsyncServer() {
-    return asyncWebServer;
+    return _asyncWebServer;
 }
 
-WiFiController::WiFiController() : asyncWebServer{8080} {}
+WiFiController::WiFiController(InformationProxy* proxy) : _portal{webServer},
+                                                          _asyncWebServer{8080}, _informationProxy{proxy} {}
