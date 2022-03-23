@@ -32,3 +32,4 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       run: pio run
+      working-directory: ${{env.working-directory}}
